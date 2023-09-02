@@ -15,5 +15,7 @@ var config = {
     update: update,
   },
 };
-var METEOR_DIFFICULTY = 3;
+let METEOR_DIFFICULTY = 8;
+const MAX_METEOR_DIFFICULTY = 10;
+const DUCK_SPEED = 350;
 var game = new Phaser.Game(config);

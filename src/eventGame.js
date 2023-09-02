@@ -7,8 +7,12 @@ function meteorHitGround(meteor, groundCollided, scene) {
     secondClosestMeteor = null;
     secondClosestMeteorLine.clear();
   }
+  if (meteor == thirdClosestMeteor) {
+    thirdClosestMeteor = null;
+    thirdClosestMeteorLine.clear();
+  }
   const fire = scene.physics.add
-    .sprite(meteor.x, meteor.y, "fire")
+    .sprite(meteor.x, meteor.y + 15, "fire")
     .setScale(0.25);
   scene.physics.add.collider(fire, ground);
   scene.physics.add.overlap(
@@ -39,14 +43,5 @@ function meteorHitDuck(meteor, duck, scene) {
   }, 1500);
 }
 function fireHitDuck(fire, duck, scene) {
-  updateScore(score - 10);
-  const text = scene.add.text(16, 16, "Ouch!", {
-    fontSize: "64px",
-    fill: "#000",
-  });
-  setTimeout(() => {
-    text.destroy();
-  }, 1500);
-  hitTimer = hitDuration;
   fire.destroy();
 }

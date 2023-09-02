@@ -2,12 +2,13 @@ var hitTimer = 0; // Timer to control the hit effect duration
 var hitDuration = 2000;
 var closestMeteor;
 var secondClosestMeteor;
+var thirdClosestMeteor;
 function update() {
   moveCloud();
   listenDuckMovement(this);
   handleDuckDamageEffect(this);
-  find2ClosestMeteor();
-  drawLine2ClosestMeteor(this);
+  find3ClosestMeteor();
+  drawLine3ClosestMeteor(this);
 }
 function moveCloud() {
   cloud1.play("cloud1-idle", true);
@@ -26,11 +27,11 @@ function moveCloud() {
 function listenDuckMovement(scene) {
   const cursors = scene.input.keyboard.createCursorKeys();
   if (cursors.left.isDown) {
-    duck.setVelocityX(-300);
+    duck.setVelocityX(-DUCK_SPEED);
 
     duck.anims.play("left", true);
   } else if (cursors.right.isDown) {
-    duck.setVelocityX(300);
+    duck.setVelocityX(DUCK_SPEED);
 
     duck.anims.play("right", true);
   } else {
@@ -67,24 +68,17 @@ function resetGame() {
   });
 }
 
-function find2ClosestMeteor() {
-  meteorGroup.children.iterate(function (child) {
-    if (!closestMeteor) {
-      closestMeteor = child;
-    }
-    if (!secondClosestMeteor) {
-      secondClosestMeteor = child;
-    }
-    if (
-      euclideanDistance([child.x, child.y], [duck.x, duck.y]) <
-      euclideanDistance([closestMeteor.x, closestMeteor.y], [duck.x, duck.y])
-    ) {
-      secondClosestMeteor = closestMeteor;
-      closestMeteor = child;
-    }
-  });
+function find3ClosestMeteor() {
+  meteorGroup.children.entries.sort(
+    (a, b) =>
+      euclideanDistance([a.x, a.y], [duck.x, duck.y]) -
+      euclideanDistance([b.x, b.y], [duck.x, duck.y])
+  );
+  closestMeteor = meteorGroup.children.entries[0];
+  secondClosestMeteor = meteorGroup.children.entries[1];
+  thirdClosestMeteor = meteorGroup.children.entries[2];
 }
-function drawLine2ClosestMeteor(scene) {
+function drawLine3ClosestMeteor(scene) {
   if (closestMeteor) {
     closestMeteorLine.clear();
     const line = new Phaser.Geom.Line(
@@ -104,6 +98,16 @@ function drawLine2ClosestMeteor(scene) {
       secondClosestMeteor.y
     );
     secondClosestMeteorLine.strokeLineShape(line);
+  }
+  if (thirdClosestMeteor) {
+    thirdClosestMeteorLine.clear();
+    const line = new Phaser.Geom.Line(
+      duck.x,
+      duck.y,
+      thirdClosestMeteor.x,
+      thirdClosestMeteor.y
+    );
+    thirdClosestMeteorLine.strokeLineShape(line);
   }
 }
 function euclideanDistance(point1, point2) {

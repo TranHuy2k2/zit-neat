@@ -7,6 +7,7 @@ var scoreText;
 var score = 0;
 var closestMeteorLine;
 var secondClosestMeteorLine;
+var thirdClosestMeteorLine;
 function create() {
   this.add.image(400, 300, "bg");
   scoreText = this.add.text(game.config.width - 200, 16, "score: 0", {
@@ -19,7 +20,7 @@ function create() {
   createGround(this);
   createMeteorGroup(this);
   createFireEffect(this);
-  create2ClosestMeteorLine(this);
+  create3ClosestMeteorLine(this);
 }
 
 function createCloud(scene) {
@@ -42,7 +43,7 @@ function createDuck(scene) {
   duck = scene.physics.add.sprite(100, 300, "duck");
   duck.setScale(0.65);
   duck.setCrop(10, 5, 140, 140);
-  duck.setSize(20, 10);
+  duck.setSize(20, 20);
   duck.setBounce(0.2);
   duck.setCollideWorldBounds(true);
   duck.setDepth(1);
@@ -74,19 +75,25 @@ function createGround(scene) {
   scene.physics.add.collider(duck, ground);
 }
 
-function create2ClosestMeteorLine(scene) {
+function create3ClosestMeteorLine(scene) {
   closestMeteorLine = scene.add.graphics({
     lineStyle: { width: 4, color: 0xaa00aa },
   });
   secondClosestMeteorLine = scene.add.graphics({
-    lineStyle: { width: 4, color: 0x00aa55 },
+    lineStyle: { width: 4, color: 0x0077cc },
+  });
+  thirdClosestMeteorLine = scene.add.graphics({
+    lineStyle: { width: 4, color: 0xff6600 },
   });
 }
 
 function createMeteorGroup(scene) {
   meteorGroup = scene.physics.add.group();
   scene.time.addEvent({
-    delay: Phaser.Math.Between(3000, 5000), // Random delay between 1 and 3 seconds
+    delay: Phaser.Math.Between(
+      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 100,
+      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 200
+    ), // Random delay between 1 and 3 seconds
     callback: createMeteor,
     callbackScope: scene,
     loop: true,
@@ -123,15 +130,13 @@ function createFireEffect(scene) {
 }
 
 function createMeteor() {
-  for (let i = 0; i < METEOR_DIFFICULTY * 2; i++) {
-    const meteor = meteorGroup
-      .create(Phaser.Math.Between(0, game.config.width), -50, "meteor")
-      .setScale(2.5);
+  const meteor = meteorGroup
+    .create(Phaser.Math.Between(0, game.config.width), -50, "meteor")
+    .setScale(2.5);
 
-    meteor.play("meteor_fall");
+  meteor.play("meteor_fall");
 
-    meteor.setVelocity(0, Phaser.Math.Between(1, 20));
-    meteor.setGravityY(Phaser.Math.Between(10, 50));
-  }
+  meteor.setVelocity(0, 0);
+  meteor.setGravityY(-50);
   updateScore(score + 10);
 }
