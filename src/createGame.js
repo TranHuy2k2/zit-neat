@@ -5,6 +5,8 @@ var ground;
 var meteorGroup;
 var scoreText;
 var score = 0;
+var closestMeteorLine;
+var secondClosestMeteorLine;
 function create() {
   this.add.image(400, 300, "bg");
   scoreText = this.add.text(game.config.width - 200, 16, "score: 0", {
@@ -17,6 +19,7 @@ function create() {
   createGround(this);
   createMeteorGroup(this);
   createFireEffect(this);
+  create2ClosestMeteorLine(this);
 }
 
 function createCloud(scene) {
@@ -71,6 +74,15 @@ function createGround(scene) {
   scene.physics.add.collider(duck, ground);
 }
 
+function create2ClosestMeteorLine(scene) {
+  closestMeteorLine = scene.add.graphics({
+    lineStyle: { width: 4, color: 0xaa00aa },
+  });
+  secondClosestMeteorLine = scene.add.graphics({
+    lineStyle: { width: 4, color: 0x00aa55 },
+  });
+}
+
 function createMeteorGroup(scene) {
   meteorGroup = scene.physics.add.group();
   scene.time.addEvent({
@@ -121,6 +133,5 @@ function createMeteor() {
     meteor.setVelocity(0, Phaser.Math.Between(1, 20));
     meteor.setGravityY(Phaser.Math.Between(10, 50));
   }
-  score += 10;
-  scoreText.setText(`Score : ${score}`);
+  updateScore(score + 10);
 }

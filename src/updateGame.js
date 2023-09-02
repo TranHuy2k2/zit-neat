@@ -1,9 +1,13 @@
 var hitTimer = 0; // Timer to control the hit effect duration
 var hitDuration = 2000;
+var closestMeteor;
+var secondClosestMeteor;
 function update() {
   moveCloud();
   listenDuckMovement(this);
   handleDuckDamageEffect(this);
+  find2ClosestMeteor();
+  drawLine2ClosestMeteor(this);
 }
 function moveCloud() {
   cloud1.play("cloud1-idle", true);
@@ -55,10 +59,67 @@ function handleDuckDamageEffect(scene) {
 }
 
 function resetGame() {
-  score = 0;
+  updateScore(0);
   duck.setX(200);
   duck.setY(450);
   meteorGroup.children.iterate(function (child) {
     if (child) child.destroy();
   });
+}
+
+function find2ClosestMeteor() {
+  meteorGroup.children.iterate(function (child) {
+    if (!closestMeteor) {
+      closestMeteor = child;
+    }
+    if (!secondClosestMeteor) {
+      secondClosestMeteor = child;
+    }
+    if (
+      euclideanDistance([child.x, child.y], [duck.x, duck.y]) <
+      euclideanDistance([closestMeteor.x, closestMeteor.y], [duck.x, duck.y])
+    ) {
+      secondClosestMeteor = closestMeteor;
+      closestMeteor = child;
+    }
+  });
+}
+function drawLine2ClosestMeteor(scene) {
+  if (closestMeteor) {
+    closestMeteorLine.clear();
+    const line = new Phaser.Geom.Line(
+      duck.x,
+      duck.y,
+      closestMeteor.x,
+      closestMeteor.y
+    );
+    closestMeteorLine.strokeLineShape(line);
+  }
+  if (secondClosestMeteor) {
+    secondClosestMeteorLine.clear();
+    const line = new Phaser.Geom.Line(
+      duck.x,
+      duck.y,
+      secondClosestMeteor.x,
+      secondClosestMeteor.y
+    );
+    secondClosestMeteorLine.strokeLineShape(line);
+  }
+}
+function euclideanDistance(point1, point2) {
+  if (point1.length !== point2.length) {
+    throw new Error("Point dimensions do not match");
+  }
+
+  let sum = 0;
+  for (let i = 0; i < point1.length; i++) {
+    sum += Math.pow(point1[i] - point2[i], 2);
+  }
+
+  return Math.sqrt(sum);
+}
+
+function updateScore(newScore) {
+  score = newScore;
+  scoreText.setText("Score " + newScore);
 }

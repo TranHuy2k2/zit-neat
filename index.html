@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZIT-NEAT</title>
-    <link href="lib/bootstrap-5.3.1-dist/css/bootstrap.min.css" />
-    <script href="lib/bootstrap-5.3.1-dist/js/bootstrap.min.js"></script>
+    <link href="vendors/bootstrap-5.3.1-dist/css/bootstrap.min.css" />
+    <script href="vendors/bootstrap-5.3.1-dist/js/bootstrap.min.js"></script>
   </head>
   <style>
     body {
@@ -24,13 +24,22 @@
   <body>
     <div id="page-container">
       <div id="game-container"></div>
+      <div id="svgContainer"></div>
       <div id="control-container"></div>
     </div>
-    <script src="lib/phaser/phaser.min.js"></script>
+    <script src="vendors/phaser/phaser.min.js"></script>
     <script src="src/eventGame.js"></script>
     <script src="src/preloadGame.js"></script>
     <script src="src/createGame.js"></script>
     <script src="src/updateGame.js"></script>
     <script src="src/config/game.js"></script>
+
+    <!-- NEAT -->
+    <script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
+    <script src="./src/neat/population.js"></script>
+    <script src="./src/neat/player.js"></script>
+    <script src="./src/neat/node.js"></script>
+    <script src="./src/neat/connection.js"></script>
+    <script src="./src/neat/genome.js"></script>
   </body>
 </html>
