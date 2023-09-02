@@ -18,6 +18,16 @@ function meteorHitGround(meteor, groundCollided, scene) {
 }
 function meteorHitDuck(meteor, duck, scene) {
   meteor.destroy();
+  const text = scene.add.text(16, 16, "Game over!", {
+    fontSize: "64px",
+    fill: "#000",
+  });
+  game.loop.sleep();
+  setTimeout(() => {
+    text.destroy();
+    resetGame();
+    game.loop.wake();
+  }, 1500);
 }
 function fireHitDuck(fire, duck, scene) {
   const text = scene.add.text(16, 16, "Ouch!", {

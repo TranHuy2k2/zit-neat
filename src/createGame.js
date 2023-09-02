@@ -3,9 +3,15 @@ var cloud2;
 var duck;
 var ground;
 var meteorGroup;
+var scoreText;
+var score = 0;
 function create() {
   this.add.image(400, 300, "bg");
-
+  scoreText = this.add.text(game.config.width - 200, 16, "score: 0", {
+    fontSize: "32px",
+    fill: "#000",
+  });
+  scoreText.setText("Score: " + score);
   createCloud(this);
   createDuck(this);
   createGround(this);
@@ -105,7 +111,7 @@ function createFireEffect(scene) {
 }
 
 function createMeteor() {
-  for (let i = 0; i < METEOR_DIFFICULTY; i++) {
+  for (let i = 0; i < METEOR_DIFFICULTY * 2; i++) {
     const meteor = meteorGroup
       .create(Phaser.Math.Between(0, game.config.width), -50, "meteor")
       .setScale(2.5);
@@ -113,6 +119,8 @@ function createMeteor() {
     meteor.play("meteor_fall");
 
     meteor.setVelocity(0, Phaser.Math.Between(1, 20));
-    meteor.setGravityY(Phaser.Math.Between(10, 100));
+    meteor.setGravityY(Phaser.Math.Between(10, 50));
   }
+  score += 10;
+  scoreText.setText(`Score : ${score}`);
 }

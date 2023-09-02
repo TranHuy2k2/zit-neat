@@ -53,3 +53,12 @@ function handleDuckDamageEffect(scene) {
     duck.visible = true;
   }
 }
+
+function resetGame() {
+  score = 0;
+  duck.setX(200);
+  duck.setY(450);
+  meteorGroup.children.iterate(function (child) {
+    if (child) child.destroy();
+  });
+}
