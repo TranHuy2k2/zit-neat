@@ -1,9 +1,10 @@
 function update() {
   moveCloud();
-  listenDuckMoving(this);
+  listenDuckMovement(this);
 }
-let isCloudMoving = false;
 function moveCloud() {
+  cloud1.play("cloud1-idle", true);
+  cloud2.play("cloud2-idle", true);
   cloud1.x += 0.25;
   cloud2.x += 0.25;
 
@@ -15,15 +16,14 @@ function moveCloud() {
     cloud2.x = -cloud2.width;
   }
 }
-function listenDuckMoving(scene) {
-  console.log("Called");
+function listenDuckMovement(scene) {
   const cursors = scene.input.keyboard.createCursorKeys();
   if (cursors.left.isDown) {
-    duck.setVelocityX(-160);
+    duck.setVelocityX(-300);
 
     duck.anims.play("left", true);
   } else if (cursors.right.isDown) {
-    duck.setVelocityX(160);
+    duck.setVelocityX(300);
 
     duck.anims.play("right", true);
   } else {

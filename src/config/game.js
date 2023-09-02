@@ -15,4 +15,5 @@ var config = {
     update: update,
   },
 };
+var METEOR_DIFFICULTY = 3;
 var game = new Phaser.Game(config);
