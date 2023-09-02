@@ -1,6 +1,9 @@
+var hitTimer = 0; // Timer to control the hit effect duration
+var hitDuration = 2000;
 function update() {
   moveCloud();
   listenDuckMovement(this);
+  handleDuckDamageEffect(this);
 }
 function moveCloud() {
   cloud1.play("cloud1-idle", true);
@@ -34,5 +37,19 @@ function listenDuckMovement(scene) {
 
   if (cursors.up.isDown && duck.body.touching.down) {
     duck.setVelocityY(-330);
+  }
+}
+function handleDuckDamageEffect(scene) {
+  if (hitTimer > 0) {
+    // Flash the player by altering visibility
+    if (hitTimer % 100 == 0) {
+      duck.visible = !duck.visible;
+    }
+
+    // Decrease the hit timer
+    hitTimer -= 10;
+  } else {
+    // Reset the player's visibility when the hit effect duration is over
+    duck.visible = true;
   }
 }

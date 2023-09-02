@@ -31,7 +31,9 @@ function createCloud(scene) {
 }
 function createDuck(scene) {
   duck = scene.physics.add.sprite(100, 300, "duck");
-  duck.setScale(0.7);
+  duck.setScale(0.65);
+  duck.setCrop(10, 5, 140, 140);
+  duck.setSize(20, 10);
   duck.setBounce(0.2);
   duck.setCollideWorldBounds(true);
   duck.setDepth(1);
@@ -111,6 +113,6 @@ function createMeteor() {
     meteor.play("meteor_fall");
 
     meteor.setVelocity(0, Phaser.Math.Between(1, 20));
-    meteor.setGravityY(Phaser.Math.Between(10, 300));
+    meteor.setGravityY(Phaser.Math.Between(10, 100));
   }
 }
