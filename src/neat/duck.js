@@ -11,6 +11,22 @@ class Player {
     this.dead = false;
     this.decisions = []; //Current Output values
     this.vision = []; //Current input values
+
+    // Render duck on screen
+    this.duck = createDuck(scene);
+    this.closestMeteor;
+    this.secondClosestMeteor;
+    this.thirdClosestMeteor;
+
+    this.closestMeteorLine = scene.add.graphics({
+      lineStyle: { width: 4, color: 0xaa00aa },
+    });
+    this.secondClosestMeteorLine = scene.add.graphics({
+      lineStyle: { width: 4, color: 0x0077cc },
+    });
+    this.thirdClosestMeteorLine = scene.add.graphics({
+      lineStyle: { width: 4, color: 0xff6600 },
+    });
   }
 
   clone() {

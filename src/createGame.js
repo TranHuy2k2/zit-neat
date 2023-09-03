@@ -1,14 +1,15 @@
 var cloud1;
 var cloud2;
-var duck;
+var ducks;
 var ground;
 var meteorGroup;
 var scoreText;
 var score = 0;
-var closestMeteorLine;
-var secondClosestMeteorLine;
-var thirdClosestMeteorLine;
+
 function create() {
+  scene = this;
+  // Create new duck group for game
+  ducks = this.physics.add.group();
   this.add.image(400, 300, "bg");
   scoreText = this.add.text(game.config.width - 200, 16, "score: 0", {
     fontSize: "32px",
@@ -16,11 +17,11 @@ function create() {
   });
   scoreText.setText("Score: " + score);
   createCloud(this);
-  createDuck(this);
   createGround(this);
   createMeteorGroup(this);
   createFireEffect(this);
-  create3ClosestMeteorLine(this);
+  createDuckAnimation(this);
+  setup(this);
 }
 
 function createCloud(scene) {
@@ -39,15 +40,7 @@ function createCloud(scene) {
     repeat: -1,
   });
 }
-function createDuck(scene) {
-  duck = scene.physics.add.sprite(100, 300, "duck");
-  duck.setScale(0.65);
-  duck.setCrop(10, 5, 140, 140);
-  duck.setSize(20, 20);
-  duck.setBounce(0.2);
-  duck.setCollideWorldBounds(true);
-  duck.setDepth(1);
-
+function createDuckAnimation(scene) {
   scene.anims.create({
     key: "left",
     frames: scene.anims.generateFrameNumbers("duck", { start: 0, end: 1 }),
@@ -67,24 +60,21 @@ function createDuck(scene) {
     repeat: -1,
   });
 }
+function createDuck(scene) {
+  const duck = ducks.create(Phaser.Math.Between(100, 900), 500, "duck");
+  duck.setScale(0.65);
+  duck.setCrop(10, 5, 140, 140);
+  duck.setSize(20, 20);
+  duck.setBounce(0.2);
+  duck.setDepth(1);
+  scene.physics.add.collider(duck, ground);
+  return duck;
+}
 
 function createGround(scene) {
   ground = scene.physics.add.staticGroup();
   ground.create(400, 700, "ground").setScale(1).refreshBody();
   ground.create(800, 700, "ground").setScale(1).refreshBody();
-  scene.physics.add.collider(duck, ground);
-}
-
-function create3ClosestMeteorLine(scene) {
-  closestMeteorLine = scene.add.graphics({
-    lineStyle: { width: 4, color: 0xaa00aa },
-  });
-  secondClosestMeteorLine = scene.add.graphics({
-    lineStyle: { width: 4, color: 0x0077cc },
-  });
-  thirdClosestMeteorLine = scene.add.graphics({
-    lineStyle: { width: 4, color: 0xff6600 },
-  });
 }
 
 function createMeteorGroup(scene) {
@@ -113,8 +103,8 @@ function createMeteorGroup(scene) {
   );
   scene.physics.add.overlap(
     meteorGroup,
-    duck,
-    (meteor, duck) => meteorHitDuck(duck, meteor, scene),
+    ducks,
+    (meteor, ducks) => meteorHitDuck(ducks, meteor, scene),
     null,
     scene
   );

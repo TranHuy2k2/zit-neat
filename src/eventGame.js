@@ -17,8 +17,8 @@ function meteorHitGround(meteor, groundCollided, scene) {
   scene.physics.add.collider(fire, ground);
   scene.physics.add.overlap(
     fire,
-    duck,
-    (fire, duck) => fireHitDuck(fire, duck, scene),
+    ducks,
+    (fire, ducks) => fireHitDuck(fire, ducks, scene),
     null,
     scene
   );
