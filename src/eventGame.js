@@ -34,13 +34,8 @@ function meteorHitDuck(meteor, duck, scene) {
     fontSize: "64px",
     fill: "#000",
   });
-  game.loop.sleep();
-  // Game over
-  setTimeout(() => {
-    text.destroy();
-    game.loop.wake();
-    resetGame();
-  }, 1500);
+  // Duck die
+  resetGame(duck);
 }
 function fireHitDuck(fire, duck, scene) {
   fire.destroy();

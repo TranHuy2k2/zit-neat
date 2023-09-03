@@ -68,6 +68,13 @@ function createDuck(scene) {
   duck.setBounce(0.2);
   duck.setDepth(1);
   scene.physics.add.collider(duck, ground);
+  scene.physics.add.overlap(
+    meteorGroup,
+    duck,
+    (meteor, duck) => meteorHitDuck(duck, meteor, scene),
+    null,
+    scene
+  );
   return duck;
 }
 
@@ -98,13 +105,6 @@ function createMeteorGroup(scene) {
     meteorGroup,
     ground,
     (meteor, ground) => meteorHitGround(meteor, ground, scene),
-    null,
-    scene
-  );
-  scene.physics.add.overlap(
-    meteorGroup,
-    ducks,
-    (meteor, ducks) => meteorHitDuck(ducks, meteor, scene),
     null,
     scene
   );

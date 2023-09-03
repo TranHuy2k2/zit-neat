@@ -49,12 +49,27 @@ class Player {
 
   //Game stuff
   look() {
-    this.vision = [points[this.lifespan].x, points[this.lifespan].y];
-    this.correctVal = points[this.lifespan].type;
+    if (
+      !this.closestMeteor ||
+      !this.secondClosestMeteor ||
+      !this.thirdClosestMeteor
+    )
+      return;
+    this.vision = [
+      this.closestMeteor.x,
+      this.closestMeteor.y,
+      this.secondClosestMeteor.x,
+      this.secondClosestMeteor.y,
+      this.thirdClosestMeteor.x,
+      this.thirdClosestMeteor.y,
+    ];
+    // this.vision = [points[this.lifespan].x, points[this.lifespan].y];
+    // this.correctVal = points[this.lifespan].type;
   }
 
   think() {
     this.decisions = this.brain.feedForward(this.vision);
+    // console.log(this.decisions);
   }
 
   move() {
@@ -66,12 +81,11 @@ class Player {
   }
 
   update() {
-    if (this.correctVal == this.val) {
-      this.score++;
-    }
-
-    this.lifespan++;
-    if (this.lifespan >= points.length) this.dead = true;
+    // if (this.correctVal == this.val) {
+    //   this.score++;
+    // }
+    // this.lifespan++;
+    // if (this.lifespan >= points.length) this.dead = true;
   }
 
   show() {

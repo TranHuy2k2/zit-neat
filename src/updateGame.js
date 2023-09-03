@@ -4,6 +4,8 @@ var closestMeteor;
 var secondClosestMeteor;
 var thirdClosestMeteor;
 function update() {
+  if (!population.done()) population.updateAlive();
+  else population.naturalSelection();
   moveCloud();
   find3ClosestMeteor();
   drawLine3ClosestMeteor(this);
@@ -38,12 +40,16 @@ function handleDuckDamageEffect(scene) {
   }
 }
 
-function resetGame() {
-  population.population.map((duck) => {
-    duck.dead = true;
-    duck.duck.setX(200);
-    duck.duck.setY(450);
-    duck.score = 0;
+function resetGame(duck) {
+  population.population.map((candidate) => {
+    if (candidate.duck == duck) {
+      candidate.dead = true;
+      candidate.duck.setX(200);
+      candidate.duck.setY(450);
+      candidate.score = 0;
+      duck.destroy();
+      console.log(candidate);
+    }
   });
 
   meteorGroup.children.iterate(function (child) {
