@@ -16,6 +16,7 @@ function create() {
     fontSize: "32px",
     fill: "#000",
   });
+
   createCloud(this);
   createGround(this);
   createMeteorGroup(this);

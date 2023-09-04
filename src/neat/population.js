@@ -19,6 +19,10 @@ class Population {
       this.population[i].brain.generateNetwork();
       this.population[i].brain.mutate();
     }
+    const rand = Math.floor(Math.random() * this.population.length);
+    this.bestPlayer = this.population[rand].clone();
+    this.bestPlayer.brain.id = "BestGenome";
+    this.bestPlayer.brain.draw();
   }
 
   updateAlive() {

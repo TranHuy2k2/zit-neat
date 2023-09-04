@@ -13,25 +13,71 @@
   <style>
     body {
       margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      background-color: #efddce;
     }
     canvas {
       width: 100%;
-      max-width: 1200px;
       height: 700px;
     }
     #game-container {
       display: flex;
       justify-content: center;
     }
+    .footer-container {
+      opacity: 0.7;
+      background-color: white;
+      position: absolute;
+      top: 10px;
+      width: 400px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
+  <header class="footer-container">
+    <p class="text-center m-0">
+      Powered by <strong>ZIT Software</strong>
+      <span>
+        <img width="50px" src="/public/zit-logo.png" alt="ZIT" />
+      </span>
+    </p>
+  </header>
   <body>
-    <div id="page-container" class="container-xxl">
-      <div class="row">
-        <div class="col col-10">
+    <div id="page-container" class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col col-12 col-lg-9 shadow p-0">
           <div id="game-container"></div>
         </div>
-        <div class="col col-2">
-          <div id="svgContainer"></div>
+        <div class="col col-12 col-lg-3">
+          <div
+            class="d-flex align-items-center w-100 h-100 justify-content-center"
+          >
+            <div class="card">
+              <div id="svgContainer"></div>
+              <div class="card-body">
+                <h5 class="card-title text-center">Best Neural Network</h5>
+                <div class="description mt-5">
+                  <p class="card-text">
+                    <strong>Inputs:</strong> Position of Duck, Position of
+                    closest meteor
+                  </p>
+                  <p class="card-text">
+                    <strong>Outputs:</strong> Actions for duck: Go left or Go
+                    Right
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="control-container"></div>
       </div>

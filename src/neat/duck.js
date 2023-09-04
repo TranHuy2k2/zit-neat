@@ -71,7 +71,7 @@ class Player {
 
   think() {
     this.decisions = this.brain.feedForward(this.vision);
-    // console.log(this.decisions);
+    console.log(this.decisions);
   }
 
   move() {

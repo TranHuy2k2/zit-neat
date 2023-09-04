@@ -328,6 +328,8 @@ class Genome {
     var element = document.getElementById(this.id);
     if (element) element.parentNode.removeChild(element);
 
+    const inputNames = ["duck_x", "duck_y", "meteor_x", "meteor_y"];
+
     var svg = d3
       .select("body")
       .append("svg")
@@ -411,12 +413,9 @@ class Genome {
       .attr("dx", 12)
       .attr("dy", ".35em")
       .text(function (d) {
-        return (
-          d.number +
-          (d.layer > 0
-            ? "(" + activationsNames[d.activationFunction] + ")"
-            : null)
-        );
+        if (d.layer > 0)
+          return `${d.number} - (${activationsNames[d.activationFunction]})`;
+        return `${inputNames[d.number]}`;
       });
 
     force.on("tick", function () {
