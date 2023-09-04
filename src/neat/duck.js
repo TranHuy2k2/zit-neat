@@ -57,12 +57,13 @@ class Player {
       return;
     this.vision = [
       this.duck.x,
+      this.duck.y,
       this.closestMeteor.x,
-      // this.closestMeteor.y,
+      this.closestMeteor.y,
       this.secondClosestMeteor.x,
-      // this.secondClosestMeteor.y,
+      this.secondClosestMeteor.y,
       this.thirdClosestMeteor.x,
-      // this.thirdClosestMeteor.y,
+      this.thirdClosestMeteor.y,
     ];
     // this.vision = [points[this.lifespan].x, points[this.lifespan].y];
     // this.correctVal = points[this.lifespan].type;
@@ -87,6 +88,7 @@ class Player {
     } else {
       if (!this.duck.body) return;
       this.duck.setVelocityX(0);
+      this.score -= 5;
     }
     // console.log(this.decisions[maxIndex]);
     // this.val = this.decisions[maxIndex] >= 0 ? 1 : 0;

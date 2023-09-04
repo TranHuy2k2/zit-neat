@@ -134,6 +134,7 @@ function euclideanDistance(point1, point2) {
 
 function updateScore(addScore) {
   population.population = population.population.map((candidate) => {
+    if (candidate.dead) return candidate;
     candidate.score += addScore;
     return candidate;
   });

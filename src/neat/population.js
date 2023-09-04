@@ -1,4 +1,4 @@
-let genomeInputsN = 4; // Given the x and y of the 3 closest meteors.
+let genomeInputsN = 8; // Given the x and y of the 3 closest meteors and x,y of duck.
 let genomeOutputN = 3; // The 3 possible actions: left, right, stand still.
 let showBest = true;
 
