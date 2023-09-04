@@ -72,14 +72,15 @@ function createDuckAnimation(scene) {
 }
 function createDuck(scene) {
   const duck = ducks.create(
-    Phaser.Math.Between(0, game.config.width),
+    Phaser.Math.Between(100, game.config.width - 100),
     // 100,
     500,
     "duck"
   );
+  const fxPixelated = duck.preFX.addPixelate(-3);
   duck.setScale(0.65);
   duck.setCrop(10, 5, 140, 140);
-  duck.setSize(100, 100);
+  duck.setSize(80, 80);
   duck.setBounce(0.2);
   duck.setDepth(1);
   duck.setCollideWorldBounds(true);
@@ -104,8 +105,8 @@ function createMeteorGroup(scene) {
   meteorGroup = scene.physics.add.group();
   scene.time.addEvent({
     delay: Phaser.Math.Between(
-      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 500,
-      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 1000
+      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 200,
+      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 300
     ),
     callback: createMeteor,
     callbackScope: scene,
@@ -145,17 +146,15 @@ function createFireEffect(scene) {
 }
 
 function createMeteor() {
-  for (let i = 0; i < 4; i++) {
-    const meteor = meteorGroup
-      .create(Phaser.Math.Between(0, game.config.width), -50, "meteor")
-      .setScale(2.5);
+  const meteor = meteorGroup
+    .create(Phaser.Math.Between(0, game.config.width), -50, "meteor")
+    .setScale(2.5);
 
-    meteor.play("meteor_fall");
+  meteor.play("meteor_fall");
 
-    meteor.setVelocity(0, 0);
-    meteor.setGravityY(-100);
-    updateScore(10);
-  }
+  meteor.setVelocity(0, 0);
+  meteor.setGravityY(-100);
+  updateScore(10);
 }
 function createMeteorBoundaries() {
   const meteor = meteorGroup.create(0, -50, "meteor").setScale(2.5);

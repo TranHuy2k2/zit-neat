@@ -60,10 +60,10 @@ class Player {
       this.duck.y,
       this.closestMeteor.x,
       this.closestMeteor.y,
-      this.secondClosestMeteor.x,
-      this.secondClosestMeteor.y,
-      this.thirdClosestMeteor.x,
-      this.thirdClosestMeteor.y,
+      // this.secondClosestMeteor.x,
+      // this.secondClosestMeteor.y,
+      // this.thirdClosestMeteor.x,
+      // this.thirdClosestMeteor.y,
     ];
     // this.vision = [points[this.lifespan].x, points[this.lifespan].y];
     // this.correctVal = points[this.lifespan].type;
@@ -79,12 +79,12 @@ class Player {
     for (let i = 0; i < this.decisions.length; i++)
       if (this.decisions[i] > this.decisions[maxIdx]) maxIdx = i;
 
-    if (maxIdx == 1) {
+    if (maxIdx == 0) {
       this.moveLeft();
-      this.score++;
-    } else if (maxIdx == 2) {
+      this.score += 5;
+    } else if (maxIdx == 1) {
       this.moveRight();
-      this.score++;
+      this.score += 5;
     } else {
       if (!this.duck.body) return;
       this.duck.setVelocityX(0);
