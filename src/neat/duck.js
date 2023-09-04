@@ -56,12 +56,13 @@ class Player {
     )
       return;
     this.vision = [
+      this.duck.x,
       this.closestMeteor.x,
-      this.closestMeteor.y,
+      // this.closestMeteor.y,
       this.secondClosestMeteor.x,
-      this.secondClosestMeteor.y,
+      // this.secondClosestMeteor.y,
       this.thirdClosestMeteor.x,
-      this.thirdClosestMeteor.y,
+      // this.thirdClosestMeteor.y,
     ];
     // this.vision = [points[this.lifespan].x, points[this.lifespan].y];
     // this.correctVal = points[this.lifespan].type;
@@ -73,11 +74,22 @@ class Player {
   }
 
   move() {
-    let maxIndex = 0;
+    let maxIdx = 0;
     for (let i = 0; i < this.decisions.length; i++)
-      if (this.decisions[i] > this.decisions[maxIndex]) maxIndex = i;
+      if (this.decisions[i] > this.decisions[maxIdx]) maxIdx = i;
 
-    this.val = this.decisions[maxIndex] >= 0 ? 1 : 0;
+    if (maxIdx == 1) {
+      this.moveLeft();
+      this.score++;
+    } else if (maxIdx == 2) {
+      this.moveRight();
+      this.score++;
+    } else {
+      if (!this.duck.body) return;
+      this.duck.setVelocityX(0);
+    }
+    // console.log(this.decisions[maxIndex]);
+    // this.val = this.decisions[maxIndex] >= 0 ? 1 : 0;
   }
 
   update() {
@@ -89,31 +101,39 @@ class Player {
   }
 
   show() {
-    push();
-    if (this.correctVal == this.val) {
-      if (this.correctVal == 1) fill(0, 255, 0);
-
-      if (this.correctVal == 0) fill(0, 0, 255);
-
-      ellipse(
-        points[this.lifespan - 1].x * width,
-        points[this.lifespan - 1].y * height,
-        6
-      );
-    } else {
-      fill(255, 0, 0);
-      ellipse(
-        points[this.lifespan - 1].x * width,
-        points[this.lifespan - 1].y * height,
-        6
-      );
-    }
-    pop();
+    // push();
+    // if (this.correctVal == this.val) {
+    //   if (this.correctVal == 1) fill(0, 255, 0);
+    //   if (this.correctVal == 0) fill(0, 0, 255);
+    //   ellipse(
+    //     points[this.lifespan - 1].x * width,
+    //     points[this.lifespan - 1].y * height,
+    //     6
+    //   );
+    // } else {
+    //   fill(255, 0, 0);
+    //   ellipse(
+    //     points[this.lifespan - 1].x * width,
+    //     points[this.lifespan - 1].y * height,
+    //     6
+    //   );
+    // }
+    // pop();
   }
 
   calculateFitness() {
     //Fitness function : adapt it to the needs of the
     this.fitness = this.score;
     this.fitness /= this.brain.calculateWeight();
+  }
+  moveLeft() {
+    if (!this.duck.body) return;
+    this.duck.setVelocityX(-DUCK_SPEED);
+    this.duck.anims.play("left", true);
+  }
+  moveRight() {
+    if (!this.duck.body) return;
+    this.duck.setVelocityX(DUCK_SPEED);
+    this.duck.anims.play("right", true);
   }
 }

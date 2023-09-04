@@ -28,14 +28,12 @@ function meteorHitGround(meteor, groundCollided, scene) {
     fire.destroy();
   }, 1500);
 }
-function meteorHitDuck(meteor, duck, scene) {
-  meteor.destroy();
-  const text = scene.add.text(16, 16, "Game over!", {
-    fontSize: "64px",
-    fill: "#000",
-  });
+function meteorHitDuck(duck, meteor, scene) {
+  console.log("Ouch!");
+  duck.destroy();
   // Duck die
-  resetGame(duck);
+  killDuck(duck);
+  ducks.remove(duck);
 }
 function fireHitDuck(fire, duck, scene) {
   fire.destroy();

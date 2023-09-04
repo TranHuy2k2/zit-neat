@@ -5,7 +5,12 @@ var secondClosestMeteor;
 var thirdClosestMeteor;
 function update() {
   if (!population.done()) population.updateAlive();
-  else population.naturalSelection();
+  else {
+    meteorGroup.children.iterate(function (child) {
+      if (child) child.destroy();
+    });
+    population.naturalSelection();
+  }
   moveCloud();
   find3ClosestMeteor();
   drawLine3ClosestMeteor(this);
@@ -40,26 +45,29 @@ function handleDuckDamageEffect(scene) {
   }
 }
 
-function resetGame(duck) {
-  population.population.map((candidate) => {
+function killDuck(duck) {
+  population.population = population.population.map((candidate) => {
     if (candidate.duck == duck) {
       candidate.dead = true;
       candidate.duck.setX(200);
       candidate.duck.setY(450);
-      candidate.score = 0;
-      duck.destroy();
-      console.log(candidate);
+      candidate.score = 1;
+      candidate.duck = null;
+      candidate.closestMeteor = null;
+      candidate.secondClosestMeteor = null;
+      candidate.thirdClosestMeteor = null;
+      candidate.closestMeteorLine.clear();
+      candidate.secondClosestMeteorLine.clear();
+      candidate.thirdClosestMeteorLine.clear();
     }
-  });
-
-  meteorGroup.children.iterate(function (child) {
-    if (child) child.destroy();
+    return candidate;
   });
 }
 
 function find3ClosestMeteor() {
-  population.population.map((candidate) => {
+  population.population = population.population.map((candidate) => {
     const duck = candidate.duck;
+    if (!duck) return candidate;
     meteorGroup.children.entries.sort(
       (a, b) =>
         euclideanDistance([a.x, a.y], [duck.x, duck.y]) -
@@ -71,11 +79,13 @@ function find3ClosestMeteor() {
     candidate.closestMeteor = closestMeteor;
     candidate.secondClosestMeteor = secondClosestMeteor;
     candidate.thirdClosestMeteor = thirdClosestMeteor;
+    return candidate;
   });
 }
 function drawLine3ClosestMeteor(scene) {
-  population.population.map((candidate) => {
+  population.population = population.population.map((candidate) => {
     const duck = candidate.duck;
+    if (!duck) return candidate;
     if (candidate.closestMeteor) {
       candidate.closestMeteorLine.clear();
       const line = new Phaser.Geom.Line(
@@ -106,6 +116,7 @@ function drawLine3ClosestMeteor(scene) {
       );
       candidate.thirdClosestMeteorLine.strokeLineShape(line);
     }
+    return candidate;
   });
 }
 function euclideanDistance(point1, point2) {
@@ -121,7 +132,9 @@ function euclideanDistance(point1, point2) {
   return Math.sqrt(sum);
 }
 
-function updateScore(newScore) {
-  score = newScore;
-  scoreText.setText("Score " + newScore);
+function updateScore(addScore) {
+  population.population = population.population.map((candidate) => {
+    candidate.score += addScore;
+    return candidate;
+  });
 }

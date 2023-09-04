@@ -1,4 +1,4 @@
-let genomeInputsN = 6; // Given the x and y of the 3 closest meteors.
+let genomeInputsN = 4; // Given the x and y of the 3 closest meteors.
 let genomeOutputN = 3; // The 3 possible actions: left, right, stand still.
 let showBest = true;
 
@@ -55,7 +55,6 @@ class Population {
     this.calculateFitness();
 
     let averageSum = this.getAverageScore();
-    console.log(averageSum);
     let children = [];
 
     this.fillMatingPool();
@@ -75,6 +74,7 @@ class Population {
     });
 
     console.log("Generation " + this.generation);
+    generationText.setText("Generation: " + this.generation);
     //console.log(this);
 
     this.bestPlayer.lifespan = 0;
@@ -108,11 +108,14 @@ class Population {
       let n = element.fitness * 100;
       for (let i = 0; i < n; i++) this.matingPool.push(elementN);
     });
+    console.log(this.matingPool);
   }
 
   selectPlayer() {
     let rand = Math.floor(Math.random() * this.matingPool.length);
-    return this.population[this.matingPool[rand]];
+
+    const player = this.population[this.matingPool[rand]];
+    return player;
   }
 
   getAverageScore() {

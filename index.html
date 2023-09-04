@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZIT-NEAT</title>
-    <link href="vendors/bootstrap-5.3.1-dist/css/bootstrap.min.css" />
+    <link
+      href="vendors/bootstrap-5.3.1-dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script href="vendors/bootstrap-5.3.1-dist/js/bootstrap.min.js"></script>
   </head>
   <style>
@@ -22,10 +25,16 @@
     }
   </style>
   <body>
-    <div id="page-container">
-      <div id="game-container"></div>
-      <div id="svgContainer"></div>
-      <div id="control-container"></div>
+    <div id="page-container" class="container">
+      <div class="row">
+        <div class="col col-8">
+          <div id="game-container"></div>
+        </div>
+        <div class="col col-4">
+          <div id="svgContainer"></div>
+        </div>
+        <div id="control-container"></div>
+      </div>
     </div>
     <script src="vendors/phaser/phaser.min.js"></script>
     <script src="src/eventGame.js"></script>

@@ -5,23 +5,32 @@ var ground;
 var meteorGroup;
 var scoreText;
 var score = 0;
-
+var generationText;
 function create() {
   scene = this;
   // Create new duck group for game
   ducks = this.physics.add.group();
-  this.add.image(400, 300, "bg");
-  scoreText = this.add.text(game.config.width - 200, 16, "score: 0", {
+  generationText = this.add.text(16, 16, "Generation: 0", {
     fontSize: "32px",
     fill: "#000",
   });
-  scoreText.setText("Score: " + score);
+  this.add.image(400, 300, "bg");
   createCloud(this);
   createGround(this);
   createMeteorGroup(this);
   createFireEffect(this);
   createDuckAnimation(this);
   setup(this);
+  const createScope = this;
+  this.physics.add.overlap(
+    ducks,
+    meteorGroup,
+    (duck, meteor) => {
+      meteorHitDuck(duck, meteor, createScope);
+    },
+    null,
+    this
+  );
 }
 
 function createCloud(scene) {
@@ -61,20 +70,25 @@ function createDuckAnimation(scene) {
   });
 }
 function createDuck(scene) {
-  const duck = ducks.create(Phaser.Math.Between(100, 900), 500, "duck");
+  const duck = ducks.create(
+    Phaser.Math.Between(0, game.config.width),
+    500,
+    "duck"
+  );
   duck.setScale(0.65);
   duck.setCrop(10, 5, 140, 140);
-  duck.setSize(20, 20);
+  duck.setSize(140, 140);
   duck.setBounce(0.2);
   duck.setDepth(1);
+  duck.setCollideWorldBounds(true);
   scene.physics.add.collider(duck, ground);
-  scene.physics.add.overlap(
-    meteorGroup,
-    duck,
-    (meteor, duck) => meteorHitDuck(duck, meteor, scene),
-    null,
-    scene
-  );
+  // scene.physics.add.overlap(
+  //   meteorGroup,
+  //   duck,
+  //   (meteor, duck) => meteorHitDuck(duck, meteor, scene),
+  //   null,
+  //   scene
+  // );
   return duck;
 }
 
@@ -88,8 +102,8 @@ function createMeteorGroup(scene) {
   meteorGroup = scene.physics.add.group();
   scene.time.addEvent({
     delay: Phaser.Math.Between(
-      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 100,
-      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 200
+      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 200,
+      (MAX_METEOR_DIFFICULTY - METEOR_DIFFICULTY) * 300
     ), // Random delay between 1 and 3 seconds
     callback: createMeteor,
     callbackScope: scene,
@@ -127,6 +141,6 @@ function createMeteor() {
   meteor.play("meteor_fall");
 
   meteor.setVelocity(0, 0);
-  meteor.setGravityY(-50);
-  updateScore(score + 10);
+  meteor.setGravityY(-100);
+  updateScore(10);
 }
