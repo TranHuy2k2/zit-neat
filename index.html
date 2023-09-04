@@ -30,56 +30,78 @@
       opacity: 0.7;
       background-color: white;
       position: absolute;
-      top: 10px;
-      width: 400px;
+      bottom: 10px;
+      width: 300px;
       left: 0;
       right: 0;
       margin-left: auto;
       margin-right: auto;
       border-radius: 24px;
-      padding: 24px;
+      padding: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+    .title {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
-  <header class="footer-container">
-    <p class="text-center m-0">
-      Powered by <strong>ZIT Software</strong>
-      <span>
-        <img width="50px" src="/public/zit-logo.png" alt="ZIT" />
-      </span>
-    </p>
-  </header>
+
   <body>
     <div id="page-container" class="container-fluid">
-      <div class="row justify-content-center">
+      <div>
+        <h2 class="text-center">ZIT-NEAT</h2>
+        <p class="text-center">
+          <em>AI duck learn to play 2D game with NEAT algorithm</em>
+        </p>
+      </div>
+      <div class="row justify-content-center align-items-center">
         <div class="col col-12 col-lg-9 shadow p-0">
           <div id="game-container"></div>
         </div>
         <div class="col col-12 col-lg-3">
           <div
-            class="d-flex align-items-center w-100 h-100 justify-content-center"
+            class="d-flex align-items-center w-100 h-100 align-items-center flex-column gapy-2"
           >
             <div class="card">
-              <div id="svgContainer"></div>
               <div class="card-body">
-                <h5 class="card-title text-center">Best Neural Network</h5>
+                <h5 class="card-title text-center">
+                  Current Best Neural Network
+                </h5>
+                <p class="text-center">
+                  <em>Update neural network when better "duck" is found.</em>
+                </p>
+                <div id="svgContainer"></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">
+                  <em>Description</em>
+                </h5>
                 <div class="description mt-5">
                   <p class="card-text">
-                    <strong>Inputs:</strong> Position of Duck, Position of
+                    <strong>Inputs:</strong> Position of Duck, Position of the
                     closest meteor
                   </p>
                   <p class="card-text">
                     <strong>Outputs:</strong> Actions for duck: Go left or Go
                     Right
                   </p>
+                  <p class="card-text">
+                    <strong>Activation functions:</strong> Sigmoid, Tanh, ReLU,
+                    Step, Identity
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div id="control-container"></div>
       </div>
     </div>
     <script src="vendors/phaser/phaser.min.js"></script>
@@ -98,4 +120,14 @@
     <script src="./src/neat/genome.js"></script>
     <script src="./src/utils.js"></script>
   </body>
+  <footer>
+    <div class="footer-container">
+      <p class="text-center m-0">
+        Powered by <strong>ZIT Software</strong>
+        <span>
+          <img width="50px" src="/public/zit-logo.png" alt="ZIT" />
+        </span>
+      </p>
+    </div>
+  </footer>
 </html>
