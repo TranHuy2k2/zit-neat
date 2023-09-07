@@ -44,6 +44,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
+      color: #000;
+      user-select: none;
     }
     .title {
       position: absolute;
@@ -85,13 +88,17 @@
     <script src="./src/utils.js"></script>
   </body>
   <footer>
-    <div class="footer-container">
+    <a
+      class="footer-container"
+      href="https://fb.com/zit-software"
+      target="_blank"
+    >
       <p class="text-center m-0">
         Develop by <strong>ZIT Software</strong>
         <span>
           <img width="50px" src="./public/zit-logo.png" alt="ZIT" />
         </span>
       </p>
-    </div>
+    </a>
   </footer>
 </html>
