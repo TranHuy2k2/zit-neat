@@ -11,26 +11,29 @@
     <script href="vendors/bootstrap-5.3.1-dist/js/bootstrap.min.js"></script>
   </head>
   <style>
-    body {
+    * {
       margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      background-color: #efddce;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      overflow: hidden;
     }
     canvas {
       width: 100%;
-      height: 700px;
+      height: 100vh;
     }
+
     #game-container {
-      display: flex;
-      justify-content: center;
+      width: 100%;
+      height: 100%;
     }
+
     .footer-container {
       opacity: 0.7;
       background-color: white;
-      position: absolute;
-      bottom: 10px;
+      position: fixed;
+      bottom: 20px;
       width: 300px;
       left: 0;
       right: 0;
@@ -50,59 +53,20 @@
       margin-left: auto;
       margin-right: auto;
     }
+
+    #neuron-card {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+    }
   </style>
 
   <body>
-    <div id="page-container" class="container-fluid">
-      <div>
-        <h2 class="text-center">ZIT-NEAT</h2>
-        <p class="text-center">
-          <em>AI duck learn to play 2D game with NEAT algorithm</em>
-        </p>
-      </div>
-      <div class="row justify-content-center align-items-center">
-        <div class="col col-12 col-lg-9 shadow p-0">
-          <div id="game-container"></div>
-        </div>
-        <div class="col col-12 col-lg-3">
-          <div
-            class="d-flex align-items-center w-100 h-100 align-items-center flex-column gapy-2"
-          >
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  Current Best Neural Network
-                </h5>
-                <p class="text-center">
-                  <em>Update neural network when better "duck" is found.</em>
-                </p>
-                <div id="svgContainer"></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <em>Description</em>
-                </h5>
-                <div class="description mt-5">
-                  <p class="card-text">
-                    <strong>Inputs:</strong> Position of Duck, Position of the
-                    closest meteor
-                  </p>
-                  <p class="card-text">
-                    <strong>Outputs:</strong> Actions for duck: Go left or Go
-                    Right
-                  </p>
-                  <p class="card-text">
-                    <strong>Activation functions:</strong> Sigmoid, Tanh, ReLU,
-                    Step, Identity
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div id="game-container"></div>
+    <div id="neuron-card">
+      <div id="svgContainer"></div>
     </div>
     <script src="vendors/phaser/phaser.min.js"></script>
     <script src="src/eventGame.js"></script>
@@ -123,7 +87,7 @@
   <footer>
     <div class="footer-container">
       <p class="text-center m-0">
-        Powered by <strong>ZIT Software</strong>
+        Develop by <strong>ZIT Software</strong>
         <span>
           <img width="50px" src="./public/zit-logo.png" alt="ZIT" />
         </span>
